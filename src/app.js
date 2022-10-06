@@ -23,7 +23,31 @@ parseStream.on("data", chuck => {
     data.push(chuck)
 });
 
+parseStream.on("finish", () => {
+    for(let i=0; i < data.length; i++){
+        user = data[i];
+        if(user.nome == 'admin'){
+            admin_existe = true;
+            break;
+        }
+    }    
 
+    if(admin_existe == true){
+        console.log('Usuário admin já existe e foi encontrado')
+    }else{
+        let user_admin = {
+            nome: 'admin';,
+            email:'admin@fullture.com.br',
+            senha:'452315'
+        };
+        data.push(user_admin);
+        let csv_data = papa.unparse(data);
+        fs.writeFileSync('./pessas.csv', csv_data);
+
+        console.log("Usuário admin criado com sucesso");
+    }    
+
+});
 
 
 // let gerente = new PessoaModelo("Paulo Duque", "paulo.duque@terra.com.br", "123456");
