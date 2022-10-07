@@ -41,12 +41,15 @@ parseStream.on("finish", () => {
             senha:'452315'
         };
         data.push(user_admin);
-        let csv_data = papa.unparse(data);
-        fs.writeFileSync('./pessas.csv', csv_data);
 
+        try{
+            let csv_data = papa.unparse(data);
+            fs.writeFileSync('./pessas.csv', csv_data);
+        }catch(erro){
+            console.log(erro);
+        }
         console.log("Usuário admin criado com sucesso");
     }    
-
 });
 
 
